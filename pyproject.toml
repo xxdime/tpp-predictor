@@ -1,0 +1,28 @@
+[tool.briefcase]
+project_name = "TPP Predictor"
+bundle = "ru.tpp"
+version = "0.1.0"
+url = "https://github.com/xxdime/tpp-predictor"
+license = "MIT"
+author = "xxdime"
+author_email = ""
+
+[tool.briefcase.app.tpp-predictor]
+formal_name = "TPP Predictor"
+description = "Прогнозирование износа деталей турбин ТЭС"
+sources = ["app"]
+requires = [
+    "PySide6>=6.6.0",
+    "pyqtgraph>=0.13.3",
+    "SQLAlchemy>=2.0.0",
+    "scipy>=1.11.0",
+    "scikit-learn>=1.3.0",
+    "numpy>=1.24.0",
+    "openpyxl>=3.1.0",
+]
+
+[tool.briefcase.app.tpp-predictor.windows]
+requires = []
+
+[tool.briefcase.app.tpp-predictor.linux]
+requires = []

@@ -31,18 +31,9 @@ class ForecastPlotWidget(QWidget):
     def clear_plot(self):
         """Clear the plot and show the 'no data' label."""
         self._plot_widget.clear()
-        if self._fill_item is not None:
-            try:
-                self._plot_widget.removeItem(self._fill_item)
-            except Exception:
-                pass
-            self._fill_item = None
-        if self._critical_line is not None:
-            try:
-                self._plot_widget.removeItem(self._critical_line)
-            except Exception:
-                pass
-            self._critical_line = None
+        # Items are already removed by clear(); just reset references
+        self._fill_item = None
+        self._critical_line = None
         self._plot_widget.hide()
         self._no_data_label.show()
 
@@ -69,20 +60,10 @@ class ForecastPlotWidget(QWidget):
         - GPR mean line (dashed cyan)
         - Horizontal dashed red line at critical_value
         """
-        # Clean previous content
+        # Clean previous content — clear() removes all items including fill and infinite line
         self._plot_widget.clear()
-        if self._fill_item is not None:
-            try:
-                self._plot_widget.removeItem(self._fill_item)
-            except Exception:
-                pass
-            self._fill_item = None
-        if self._critical_line is not None:
-            try:
-                self._plot_widget.removeItem(self._critical_line)
-            except Exception:
-                pass
-            self._critical_line = None
+        self._fill_item = None
+        self._critical_line = None
 
         self._no_data_label.hide()
         self._plot_widget.show()

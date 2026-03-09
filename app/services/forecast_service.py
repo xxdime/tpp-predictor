@@ -61,21 +61,25 @@ def predict_lsm(func, popt, x_values):
     return func(np.asarray(x_values, dtype=float), *popt)
 
 
-def find_critical_hours_lsm(func, popt, critical_value, is_decreasing, max_hours=1_000_000):
+def find_critical_hours_lsm(
+    func, popt, critical_value, is_decreasing, max_hours=1_000_000, x_start=0.0
+):
     """
     Find the hour at which the LSM curve crosses critical_value.
-    Returns None if no crossing is found in [0, max_hours].
+    Returns None if no crossing is found in [x_start, max_hours].
     """
+    # Avoid log/division by zero for functions that require x > 0
+    lower = max(x_start, 0.01)
+
     def f(x):
         return func(x, *popt) - critical_value
 
     try:
-        # Check if there is a sign change
-        fa = f(1.0)
+        fa = f(lower)
         fb = f(float(max_hours))
         if fa * fb > 0:
             return None
-        return brentq(f, 1.0, float(max_hours))
+        return brentq(f, lower, float(max_hours))
     except (ValueError, RuntimeError):
         return None
 

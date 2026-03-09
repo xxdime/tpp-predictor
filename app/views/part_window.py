@@ -250,7 +250,8 @@ class PartWindow(QMainWindow):
         # Extended x range for plotting
         x_max = max(hours) * 1.5
         critical_hours_lsm = forecast_service.find_critical_hours_lsm(
-            lsm_func, popt, param.critical_value, param.is_decreasing
+            lsm_func, popt, param.critical_value, param.is_decreasing,
+            x_start=min(hours),
         )
         if critical_hours_lsm is not None:
             x_max = max(x_max, critical_hours_lsm * 1.1)
@@ -330,7 +331,8 @@ class PartWindow(QMainWindow):
                     hours, values, settings.lsm_function_type
                 )
                 crit_h = forecast_service.find_critical_hours_lsm(
-                    lsm_func, popt, param.critical_value, param.is_decreasing
+                    lsm_func, popt, param.critical_value, param.is_decreasing,
+                    x_start=min(hours),
                 )
             except Exception:
                 continue
